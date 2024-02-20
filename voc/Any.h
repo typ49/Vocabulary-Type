@@ -2,118 +2,150 @@
 #define VOC_ANY_H
 
 #include <typeinfo>
+#include <memory>
+#include <stdexcept>
 
-namespace voc {
+namespace voc
+{
+  namespace details
+  {
 
-  template<typename T>
-  struct InPlaceTypeStruct {
+    class AnyBase
+    {
+    public:
+      virtual ~AnyBase() = default;
+      virtual std::unique_ptr<AnyBase> clone() const = 0;
+      virtual const std::type_info &type() const = 0;
+    };
+
+    template <typename T>
+    class AnyConcrete : public AnyBase
+    {
+    public:
+      template <typename U>
+      AnyConcrete(U &&value) : value(std::forward<U>(value)) {}
+
+      std::unique_ptr<AnyBase> clone() const override
+      {
+        return std::make_unique<AnyConcrete<T>>(*this);
+      }
+
+      const T &getValue() const
+      {
+        return value;
+      }
+
+      const std::type_info &type() const override
+      {
+        return typeid(T);
+      }
+
+    private:
+      T value;
+    };
+  }
+
+  template <typename T>
+  struct InPlaceTypeStruct
+  {
   };
 
-  template<typename T>
-  inline constexpr InPlaceTypeStruct<T> InPlaceType = { };
+  template <typename T>
+  inline constexpr InPlaceTypeStruct<T> InPlaceType = {};
 
-  class Any {
+  class Any
+  {
   public:
-    /*
-     * Create an empty object
-     */
     Any();
 
-    /*
-     * Create an object thanks to a value
-     */
-    template<typename T>
-    Any(T&& value) {
-    }
+    template <typename T>
+    Any(T &&value) : content(new details::AnyConcrete<std::decay_t<T>>(std::forward<T>(value))) {}
 
-    /*
-     * Create an object in place with the arguments of a constructor of T
-     */
-    template<typename T, typename ... Args>
-    Any(InPlaceTypeStruct<T> inPlace, Args&& ... args) {
-    }
+    template <typename T, typename... Args>
+    Any(InPlaceTypeStruct<T>, Args &&...args) : content(new details::AnyConcrete<T>(T(std::forward<Args>(args)...))) {}
 
-    /*
-     * Affecte a directly value
-     */
-    template<typename U>
-    Any& operator=(U&& value) {
+    Any(const Any &other) : content(other.content ? other.content->clone() : nullptr) {}
+
+    Any(Any &&other) noexcept : content(std::move(other.content)) {}
+
+    Any &operator=(const Any &other)
+    {
+      if (this != &other)
+      {
+        content = other.content ? other.content->clone() : nullptr;
+      }
       return *this;
     }
 
-    /*
-     * Tell if the object has a value or is empty
-     */
+    Any &operator=(Any &&other) noexcept
+    {
+      content = std::move(other.content);
+      return *this;
+    }
+
     bool hasValue() const;
 
-    /*
-     * Tell if the object has a value or is empty
-     */
     operator bool() const;
 
-    /*
-     * Clear the object. After a call to clear, the object is empty.
-     */
     void clear();
 
-    /*
-     * Return the type_info of the type of the object,
-     * or the type_info of void if the object is empty
-     */
-    const std::type_info& getType() const;
+    const std::type_info &getType() const;
+
+    template <typename T>
+    friend T anyCast(const Any &any);
+
+    template <typename T>
+    friend T *anyCast(Any *any);
+
+    template <typename T>
+    friend const T *anyCast(const Any *any);
 
   private:
-    // implementation
+    std::unique_ptr<details::AnyBase> content;
   };
 
-  /*
-   * Create an instance of Any with a value of type T
-   */
-  template<typename T, typename... Args>
-  Any makeAny(Args&&... args) {
-    return Any();
+  template <typename T, typename... Args>
+  Any makeAny(Args &&...args)
+  {
+    return Any(InPlaceType<T>, std::forward<Args>(args)...);
   }
 
-  /*
-   * Return a copy of the object, or std::bad_cast if the object is empty or has not the right type
-   */
-  template<typename T>
-  T anyCast(const Any& any) {
-    return T();
+  template <typename T>
+  T anyCast(const Any &any)
+  {
+    if (!any.hasValue() || any.getType() != typeid(T))
+    {
+      throw std::bad_cast();
+    }
+
+    auto concrete = dynamic_cast<details::AnyConcrete<std::decay_t<T>> *>(any.content.get());
+    if (!concrete)
+    {
+      throw std::bad_cast();
+    }
+    return concrete->getValue();
   }
 
-  /*
-   * Return a copy of the object, or std::bad_cast if the object is empty or has not the right type
-   */
-  template<typename T>
-  T anyCast(Any& any) {
-    return T();
-  }
-
-  /*
-   * Return a copy of the object, or std::bad_cast if the object is empty or has not the right type
-   */
-  template<typename T>
-  T anyCast(Any&& any) {
-    return T();
-  }
-
-  /*
-   * Return a pointer to the object, or nullptr if the object is empty or has not the right type
-   */
-  template<typename T>
-  T* anyCast(Any* any) {
+  template <typename T>
+  T *anyCast(Any *any)
+  {
+    if (any && any->hasValue() && any->getType() == typeid(T))
+    {
+      auto concrete = dynamic_cast<details::AnyConcrete<T> *>(any->content.get());
+      if (concrete)
+      {
+        return &concrete->getValue();
+      }
+    }
     return nullptr;
   }
 
-  /*
-   * Return a pointer to the object, or nullptr if the object is empty or has not the right type
-   */
-  template<typename T>
-  const T* anyCast(const Any* any) {
-    return nullptr;
+  template <typename T>
+  const T *anyCast(const Any *any)
+  {
+    return anyCast<T>(const_cast<Any *>(any));
   }
 
-}
+} // namespace voc
 
 #endif // VOC_ANY_H

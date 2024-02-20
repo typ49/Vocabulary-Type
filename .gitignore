@@ -1,4 +1,6 @@
 build
 !build/.gitkeep
+_voc_archive
 *.json
 *.tar.gz
+*.log

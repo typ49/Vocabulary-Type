@@ -1,6 +1,10 @@
 #ifndef VOC_OPTIONAL_H
 #define VOC_OPTIONAL_H
 
+#ifndef TODO
+#define TODO 0
+#endif
+
 namespace voc {
 
   struct InPlaceStruct {
@@ -18,12 +22,14 @@ namespace voc {
     {
     }
 
+    #if TODO
     /*
      * Create an object thanks to a value
      */
     Optional(/* implementation defined */ value)
     {
     }
+    #endif
 
     /*
      * Create an object in place with the arguments of a constructor of T
@@ -133,6 +139,7 @@ namespace voc {
     return Optional<T>();
   }
 
+  #if TODO
   /*
    * The comparaison operator could take any instance of Optional with compatible type and
    * must works with non initalized Optional.
@@ -163,6 +170,7 @@ namespace voc {
   bool operator>=(/* implementation defined */ lhs, /* implementation defined */ rhs) {
     return false;
   }
+ #endif
 
 }
 
