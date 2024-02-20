@@ -2,11 +2,11 @@
 #define VOC_ANY_TEST 1 // for testing the Any class
 #endif
 #ifndef VOC_OPTIONAL_TEST
-#define VOC_OPTIONAL_TEST 0 // for testing the Optional class
+#define VOC_OPTIONAL_TEST 1 // for testing the Optional class
 #endif
 
-#ifndef MY_TEST
-#define MY_TEST 0 // for testing function that does not get tested in the main test
+#ifndef DEBBUG
+#define DEBBUG 0 // for testing function that does not get tested in the main test
 #endif
 
 #include <gtest/gtest.h>
@@ -110,6 +110,63 @@ TEST(AnyTest, CaseOfUsage)
     std::cout << e.what() << std::endl; // throw std::bad_cast, no initialized
   }
 }
+
+TEST(AnyTest, List_Of_Any_But_Different_Type)
+{
+
+  struct Point
+  {
+    Point(int x1, int y1)
+    {
+      x = x1;
+      y = y1;
+    }
+    int x;
+    int y;
+    bool operator==(const Point &other) const
+    {
+      return x == other.x && y == other.y;
+    }
+  };
+
+  std::vector<voc::Any> any_list;
+  any_list.push_back(42);
+  any_list.push_back(3.14);
+  any_list.push_back(std::string("The cake is a lie!"));
+  any_list.push_back(Point(42, 24));
+  std::cout << "any_list.size(): " << any_list.size() << std::endl;
+  std::cout << "element of any_list :" << std::endl;
+  for (auto &any : any_list)
+  {
+    if (any.getType() == typeid(int))
+    {
+      std::cout << "\tint: " << voc::anyCast<int>(any) << std::endl;
+    }
+    else if (any.getType() == typeid(double))
+    {
+      std::cout << "\tdouble: " << voc::anyCast<double>(any) << std::endl;
+    }
+    else if (any.getType() == typeid(std::string))
+    {
+      std::cout << "\tstring: " << voc::anyCast<std::string>(any) << std::endl;
+    }
+    else if (any.getType() == typeid(Point))
+    {
+      auto point = voc::anyCast<Point>(any);
+      std::cout << "\tPoint: " << point.x << "x" << point.y << std::endl;
+    }
+  }
+
+  EXPECT_TRUE(any_list.size() == 4);
+  EXPECT_TRUE(any_list[0].getType() == typeid(int));
+  EXPECT_TRUE(any_list[1].getType() == typeid(double));
+  EXPECT_TRUE(any_list[2].getType() == typeid(std::string));
+  EXPECT_TRUE(any_list[3].getType() == typeid(Point));
+  EXPECT_TRUE(voc::anyCast<int>(any_list[0]) == 42);
+  EXPECT_TRUE(voc::anyCast<double>(any_list[1]) == 3.14);
+  EXPECT_TRUE(voc::anyCast<std::string>(any_list[2]) == "The cake is a lie!");
+  EXPECT_TRUE(voc::anyCast<Point>(any_list[3]) == Point(42, 24));
+}
 #endif // VOC_ANY_TEST
 
 #if VOC_OPTIONAL_TEST
@@ -117,10 +174,118 @@ TEST(AnyTest, CaseOfUsage)
  * TESTS FOR OPTIONAL CLASS *
  ****************************/
 
-TEST(OptionalTest, DefaultCtor)
+TEST(OptionalTest, DefaultConstructor)
 {
   voc::Optional<int> opt;
   EXPECT_FALSE(opt.hasValue());
+}
+
+TEST(OptionalTest, BoolConversion)
+{
+  voc::Optional<int> opt;
+  EXPECT_FALSE(static_cast<bool>(opt)); // false because no value
+  opt = 42;
+  EXPECT_TRUE(static_cast<bool>(opt)); // true because value
+}
+
+TEST(OptionalTest, GetValue)
+{
+  voc::Optional<int> opt;
+  opt = 42;
+  EXPECT_EQ(opt.getValue(), 42);
+  const voc::Optional<int> opt_const = 42;
+  EXPECT_EQ(opt_const.getValue(), 42);
+}
+
+TEST(OptionalTest, GetValueOr)
+{
+  voc::Optional<int> opt;
+  EXPECT_EQ(opt.getValueOr(42), 42);
+  opt = 24;
+  EXPECT_EQ(opt.getValueOr(42), 24);
+}
+
+TEST(OptionalTest, Clear)
+{
+  voc::Optional<int> opt(42);
+  EXPECT_TRUE(opt.hasValue());
+  opt.clear();
+  EXPECT_FALSE(opt.hasValue());
+}
+
+TEST(OptionalTest, ArrowOperator)
+{
+  struct Point
+  {
+    int x;
+    int y;
+  };
+  voc::Optional<Point> opt;
+  opt = Point{42, 24};
+  EXPECT_EQ(opt->x, 42);
+  EXPECT_EQ(opt->y, 24);
+}
+
+TEST(OptionalTest, DereferenceOperator)
+{
+  struct Point
+  {
+    int x;
+    int y;
+  };
+  voc::Optional<Point> opt;
+  opt = Point{42, 24};
+  EXPECT_EQ((*opt).x, 42);
+  EXPECT_EQ((*opt).y, 24);
+}
+
+TEST(OptionalTest, CaseOfUsage)
+{
+  struct Point
+  {
+    int x;
+    int y;
+  };
+  voc::Optional<Point> opt;
+  if (opt)
+  {
+    std::cout << "This will not be printed" << std::endl;
+  }
+  else
+  {
+    std::cout << "This will be printed" << std::endl;
+  }
+  // This will be printed
+  EXPECT_FALSE(static_cast<bool>(opt));
+  opt = Point{42, 24};
+  if (opt)
+  {
+    std::cout << "This will be printed" << std::endl;
+  }
+  else
+  {
+    std::cout << "This will not be printed" << std::endl;
+  }
+  // This will be printed
+  EXPECT_TRUE(static_cast<bool>(opt));
+  std::cout << opt->x << "x" << opt->y << std::endl;
+  // 42x24
+  EXPECT_EQ(opt->x, 42);
+  EXPECT_EQ(opt->y, 24);
+  auto opt_cleared = voc::makeOptional<Point>(42, 42);
+  opt_cleared.clear();
+  std::cout << opt_cleared.hasValue() << std::endl;
+  // 0 (no data)
+  EXPECT_FALSE(opt_cleared.hasValue());
+  try
+  {
+    auto point = opt_cleared.getValue();
+    std::cout << point.x << "x" << point.y << std::endl;
+  }
+  catch (const std::exception &e)
+  {
+    std::cout << e.what() << std::endl; // throw std::runtime_error, no initialized
+  }
 }
 
 #endif // VOC_OPTIONAL_TEST

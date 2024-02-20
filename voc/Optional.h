@@ -1,177 +1,175 @@
 #ifndef VOC_OPTIONAL_H
 #define VOC_OPTIONAL_H
 
-#ifndef TODO
-#define TODO 0
-#endif
+#include <typeinfo>
+#include <memory>
+#include <stdexcept>
+#include <utility>
 
-namespace voc {
+namespace voc
+{
 
-  struct InPlaceStruct {
+  struct InPlaceStruct
+  {
   };
 
-  inline constexpr InPlaceStruct InPlace = { };
+  inline constexpr InPlaceStruct InPlace = {};
 
-  template<typename T>
-  class Optional {
+  template <typename T>
+  class Optional
+  {
   public:
-    /*
-     * Create an empty object
-     */
-    Optional()
+    Optional() : initialized(false) {}
+
+    Optional(const T &value) : initialized(true)
     {
+      new (&data) T(value);
     }
 
-    #if TODO
-    /*
-     * Create an object thanks to a value
-     */
-    Optional(/* implementation defined */ value)
+    Optional(T &&value) : initialized(true)
     {
-    }
-    #endif
-
-    /*
-     * Create an object in place with the arguments of a constructor of T
-     */
-    template<typename ... Args>
-    Optional(InPlaceStruct inPlace, Args&& ... args)
-    {
+      new (&data) T(std::move(value));
     }
 
-    /*
-     * Affectation from an value
-     */
-    template<typename U>
-    Optional& operator=(U&& value) {
+    template <typename... Args>
+    Optional(InPlaceStruct, Args &&...args) : initialized(true)
+    {
+      new (&data) T(std::forward<Args>(args)...);
+    }
+
+    Optional(const Optional &other) : initialized(other.initialized)
+    {
+      if (other.initialized)
+      {
+        new (&data) T(*other.ptr());
+      }
+    }
+
+    Optional(Optional &&other) noexcept : initialized(other.initialized)
+    {
+      if (other.initialized)
+      {
+        new (&data) T(std::move(*other.ptr()));
+        other.clear(); // Ensure the moved-from object is in a valid state
+      }
+    }
+
+    ~Optional()
+    {
+      clear();
+    }
+
+    Optional &operator=(const Optional &other)
+    {
+      if (this != &other)
+      {
+        if (initialized)
+          clear();
+        if (other.initialized)
+        {
+          new (&data) T(*other.ptr());
+          initialized = true;
+        }
+      }
       return *this;
     }
 
-    /*
-     * Affectation from another compatible Optional
-     */
-    template<typename U>
-    Optional& operator=(const Optional<U>& other) {
+    Optional &operator=(Optional &&other) noexcept
+    {
+      if (this != &other)
+      {
+        if (initialized)
+          clear();
+        if (other.initialized)
+        {
+          new (&data) T(std::move(*other.ptr()));
+          initialized = true;
+          other.clear(); // Ensure the moved-from object is in a valid state
+        }
+      }
       return *this;
     }
 
-    /*
-     * Affectation from another compatible Optional
-     */
-    template<typename U>
-    Optional& operator=(Optional<U>&& other) {
-      return *this;
+    bool hasValue() const
+    {
+      return initialized;
     }
 
-    /*
-     * Tell if the object has a value, or is empty
-     */
-    bool hasValue() const {
-      return false;
+    explicit operator bool() const
+    {
+      return hasValue();
     }
 
-    /*
-     * Tell if the object has a value, or is empty
-     */
-    explicit operator bool() const {
-      return false;
+    T &getValue()
+    {
+      if (!initialized)
+        throw std::runtime_error("Optional has no value");
+      return *ptr();
     }
 
-    /*
-     * Return a reference to the object, or std::runtime_error if the object is empty
-     */
-    T& getValue() {
+    const T &getValue() const
+    {
+      if (!initialized)
+        throw std::runtime_error("Optional has no value");
+      return *ptr();
     }
 
-    /*
-     * Return a const reference to the object, or std::runtime_error if the object is empty
-     */
-    const T& getValue() const {
+    template <typename U>
+    T getValueOr(U &&defaultValue) const
+    {
+      return initialized ? *ptr() : static_cast<T>(std::forward<U>(defaultValue));
     }
 
-    /*
-     * Return a pointer to the stored data. If the value was initialized, the behaviour is undefined.
-     */
-    T* operator->() {
-      return nullptr;
+    void clear()
+    {
+      if (initialized)
+      {
+        ptr()->~T(); // Call the destructor explicitly
+        initialized = false;
+      }
     }
 
-    /*
-     * Return a const pointer to the stored data. If the value was initialized, the behaviour is undefined.
-     */
-    const T* operator->() const {
-      return nullptr;
+    T *operator->()
+    {
+      return ptr();
     }
 
-    /*
-     * Return a reference to the stored data. If the value was initialized, the behaviour is undefined.
-     */
-    T& operator*() {
-      return T();
+    const T *operator->() const
+    {
+      return ptr();
     }
 
-    /*
-     * Return a reference to the stored data. If the value was initialized, the behaviour is undefined.
-     */
-    const T& operator*() const {
-      return T();
+    T &operator*()
+    {
+      return *ptr();
     }
 
-    /*
-     * Return the stored object T or forward the default value
-     */
-    template<typename U>
-    T getValueOr(U&& defaultValue) const {
-    }
-
-    /*
-     * Clear the stored value
-     */
-    void clear() {
+    const T &operator*() const
+    {
+      return *ptr();
     }
 
   private:
-    // implementation
+    alignas(T) mutable char data[sizeof(T)];
+    bool initialized = false;
+
+    T *ptr()
+    {
+      return reinterpret_cast<T *>(&data);
+    }
+
+    const T *ptr() const
+    {
+      return reinterpret_cast<const T *>(&data);
+    }
   };
 
-  template<typename T, typename... Args>
-  Optional<T> makeOptional(Args&&... args) {
-    return Optional<T>();
+  template <typename T, typename... Args>
+  Optional<T> makeOptional(Args &&...args)
+  {
+    return Optional<T>(InPlace, std::forward<Args>(args)...);
   }
 
-  #if TODO
-  /*
-   * The comparaison operator could take any instance of Optional with compatible type and
-   * must works with non initalized Optional.
-   * Furthermore we can compare an Option directly with a value.
-   *
-   * See https://en.cppreference.com/w/cpp/utility/optional/operator_cmp for more details.
-   */
-  bool operator==(/* implementation defined */ lhs, /* implementation defined */ rhs) {
-    return false;
-  }
-
-  bool operator!=(/* implementation defined */ lhs, /* implementation defined */ rhs) {
-    return false;
-  }
-
-  bool operator< (/* implementation defined */ lhs, /* implementation defined */ rhs) {
-    return false;
-  }
-
-  bool operator<=(/* implementation defined */ lhs, /* implementation defined */ rhs) {
-    return false;
-  }
-
-  bool operator> (/* implementation defined */ lhs, /* implementation defined */ rhs) {
-    return false;
-  }
-
-  bool operator>=(/* implementation defined */ lhs, /* implementation defined */ rhs) {
-    return false;
-  }
- #endif
-
-}
+} // namespace voc
 
 #endif // VOC_OPTIONAL_H
