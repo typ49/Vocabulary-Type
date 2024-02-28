@@ -245,7 +245,10 @@ TEST(OptionalTest, CaseOfUsage)
   {
     int x;
     int y;
+
+    Point(int x, int y) : x(x), y(y) {}
   };
+
   voc::Optional<Point> opt;
   if (opt)
   {
