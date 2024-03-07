@@ -1,0 +1,303 @@
+\hypertarget{classvoc_1_1Any}{}\doxysection{voc\+::Any Class Reference}
+\label{classvoc_1_1Any}\index{voc::Any@{voc::Any}}
+
+
+Class to store any type of value.  
+
+
+
+
+{\ttfamily \#include $<$Any.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classvoc_1_1Any_ac66dd8fcc8f28f0473788d3ef91a39d0}\label{classvoc_1_1Any_ac66dd8fcc8f28f0473788d3ef91a39d0}} 
+{\bfseries Any} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , typename std\+::enable\+\_\+if$<$!std\+::is\+\_\+same$<$ \mbox{\hyperlink{classvoc_1_1Any}{Any}}, std\+::decay\+\_\+t$<$ T $>$ $>$\+::value $>$\+::type $\ast$  = nullptr$>$ }\\\mbox{\hyperlink{classvoc_1_1Any_a8e55cb64eee7825d13ccf4c3b02e6445}{Any}} (T \&\&value)
+\begin{DoxyCompactList}\small\item\em Constructor from a value. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , typename... Args$>$ }\\\mbox{\hyperlink{classvoc_1_1Any_ac108febe35036d5840732a26f289d4c7}{Any}} (\mbox{\hyperlink{structvoc_1_1InPlaceTypeStruct}{In\+Place\+Type\+Struct}}$<$ T $>$, Args \&\&...args)
+\begin{DoxyCompactList}\small\item\em Constructor from a value and a type struct. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Any_a5f598604f26becc71200358cd4c94e10}{Any}} (const \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Any_ab579d781cf5dcd508dd230d2210b0ad2}{Any}} (\mbox{\hyperlink{classvoc_1_1Any}{Any}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em Move constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Any}{Any}} \& \mbox{\hyperlink{classvoc_1_1Any_a06eafa06cb413469862afd6d219e8756}{operator=}} (const \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy assignment operator. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Any}{Any}} \& \mbox{\hyperlink{classvoc_1_1Any_a907f9435ee2c969e5f89dc27d44b0d62}{operator=}} (\mbox{\hyperlink{classvoc_1_1Any}{Any}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em Move assignment operator. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classvoc_1_1Any_a4b84314332d0e87e9194b6984b7b9c34}{has\+Value}} () const
+\begin{DoxyCompactList}\small\item\em Check if the \mbox{\hyperlink{classvoc_1_1Any}{Any}} object has a value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Any_addb6ab4113f44d66231bbd56d0ba08b2}{operator bool}} () const
+\begin{DoxyCompactList}\small\item\em Conversion operator to bool. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classvoc_1_1Any_a4c310bfebaf73f27aa8a04090cfdccf8}\label{classvoc_1_1Any_a4c310bfebaf73f27aa8a04090cfdccf8}} 
+void {\bfseries clear} ()
+\begin{DoxyCompactList}\small\item\em Clear the \mbox{\hyperlink{classvoc_1_1Any}{Any}} object. \end{DoxyCompactList}\item 
+const std\+::type\+\_\+info \& \mbox{\hyperlink{classvoc_1_1Any_a6e7a1261e82d8b5f07f8e3a258d330f0}{get\+Type}} () const
+\begin{DoxyCompactList}\small\item\em Get the type of the stored value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1details_1_1AnyBase}{details\+::\+Any\+Base}} $\ast$ \mbox{\hyperlink{classvoc_1_1Any_ae8815c9f589921027846a0da741f6989}{content\+Ptr}} () const
+\begin{DoxyCompactList}\small\item\em Get a pointer to the stored value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \mbox{\hyperlink{classvoc_1_1Any_a559ea31b4e83ce247fd74e4a3f1091ad}{any\+Cast}} (const \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&any)
+\begin{DoxyCompactList}\small\item\em Cast an \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to a T object. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\T $\ast$ \mbox{\hyperlink{classvoc_1_1Any_a120a2f1d62f3c1308236981b7d50afc4}{any\+Cast}} (\mbox{\hyperlink{classvoc_1_1Any}{Any}} $\ast$any)
+\begin{DoxyCompactList}\small\item\em Cast an \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to a T pointer. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\const T $\ast$ \mbox{\hyperlink{classvoc_1_1Any_a42317844bdf3787058a0454ba884c8b7}{any\+Cast}} (const \mbox{\hyperlink{classvoc_1_1Any}{Any}} $\ast$any)
+\begin{DoxyCompactList}\small\item\em Cast an \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to a const T pointer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class to store any type of value. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classvoc_1_1Any_a8e55cb64eee7825d13ccf4c3b02e6445}\label{classvoc_1_1Any_a8e55cb64eee7825d13ccf4c3b02e6445}} 
+\index{voc::Any@{voc::Any}!Any@{Any}}
+\index{Any@{Any}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{Any()}{Any()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename T , typename std\+::enable\+\_\+if$<$!std\+::is\+\_\+same$<$ \mbox{\hyperlink{classvoc_1_1Any}{Any}}, std\+::decay\+\_\+t$<$ T $>$ $>$\+::value $>$\+::type $\ast$  = nullptr$>$ \\
+voc\+::\+Any\+::\+Any (\begin{DoxyParamCaption}\item[{T \&\&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor from a value. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the value to be stored \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value to be stored \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classvoc_1_1Any_ac108febe35036d5840732a26f289d4c7}\label{classvoc_1_1Any_ac108febe35036d5840732a26f289d4c7}} 
+\index{voc::Any@{voc::Any}!Any@{Any}}
+\index{Any@{Any}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{Any()}{Any()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$typename T , typename... Args$>$ \\
+voc\+::\+Any\+::\+Any (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvoc_1_1InPlaceTypeStruct}{In\+Place\+Type\+Struct}}$<$ T $>$}]{,  }\item[{Args \&\&...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor from a value and a type struct. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the value to be stored \\
+\hline
+{\em ...\+Args} & The type of the arguments to be passed to the constructor of T \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The type struct \\
+\hline
+{\em ...\+args} & The arguments to be passed to the constructor of T \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classvoc_1_1Any_a5f598604f26becc71200358cd4c94e10}\label{classvoc_1_1Any_a5f598604f26becc71200358cd4c94e10}} 
+\index{voc::Any@{voc::Any}!Any@{Any}}
+\index{Any@{Any}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{Any()}{Any()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily voc\+::\+Any\+::\+Any (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to be copied \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classvoc_1_1Any_ab579d781cf5dcd508dd230d2210b0ad2}\label{classvoc_1_1Any_ab579d781cf5dcd508dd230d2210b0ad2}} 
+\index{voc::Any@{voc::Any}!Any@{Any}}
+\index{Any@{Any}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{Any()}{Any()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily voc\+::\+Any\+::\+Any (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvoc_1_1Any}{Any}} \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Move constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to be moved \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classvoc_1_1Any_ae8815c9f589921027846a0da741f6989}\label{classvoc_1_1Any_ae8815c9f589921027846a0da741f6989}} 
+\index{voc::Any@{voc::Any}!contentPtr@{contentPtr}}
+\index{contentPtr@{contentPtr}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{contentPtr()}{contentPtr()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classvoc_1_1details_1_1AnyBase}{details\+::\+Any\+Base}} $\ast$ voc\+::\+Any\+::content\+Ptr (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get a pointer to the stored value. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to the stored value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Any_a6e7a1261e82d8b5f07f8e3a258d330f0}\label{classvoc_1_1Any_a6e7a1261e82d8b5f07f8e3a258d330f0}} 
+\index{voc::Any@{voc::Any}!getType@{getType}}
+\index{getType@{getType}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily const std\+::type\+\_\+info \& voc\+::\+Any\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the type of the stored value. 
+
+\begin{DoxyReturn}{Returns}
+The type\+\_\+info of the stored value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Any_a4b84314332d0e87e9194b6984b7b9c34}\label{classvoc_1_1Any_a4b84314332d0e87e9194b6984b7b9c34}} 
+\index{voc::Any@{voc::Any}!hasValue@{hasValue}}
+\index{hasValue@{hasValue}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{hasValue()}{hasValue()}}
+{\footnotesize\ttfamily bool voc\+::\+Any\+::has\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Check if the \mbox{\hyperlink{classvoc_1_1Any}{Any}} object has a value. 
+
+\begin{DoxyReturn}{Returns}
+true if the \mbox{\hyperlink{classvoc_1_1Any}{Any}} object has a value, false otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Any_addb6ab4113f44d66231bbd56d0ba08b2}\label{classvoc_1_1Any_addb6ab4113f44d66231bbd56d0ba08b2}} 
+\index{voc::Any@{voc::Any}!operator bool@{operator bool}}
+\index{operator bool@{operator bool}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{operator bool()}{operator bool()}}
+{\footnotesize\ttfamily voc\+::\+Any\+::operator bool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Conversion operator to bool. 
+
+\begin{DoxyReturn}{Returns}
+true if the \mbox{\hyperlink{classvoc_1_1Any}{Any}} object has a value, false otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Any_a907f9435ee2c969e5f89dc27d44b0d62}\label{classvoc_1_1Any_a907f9435ee2c969e5f89dc27d44b0d62}} 
+\index{voc::Any@{voc::Any}!operator=@{operator=}}
+\index{operator=@{operator=}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classvoc_1_1Any}{Any}} \& voc\+::\+Any\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvoc_1_1Any}{Any}} \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Move assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to be moved \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the current object 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Any_a06eafa06cb413469862afd6d219e8756}\label{classvoc_1_1Any_a06eafa06cb413469862afd6d219e8756}} 
+\index{voc::Any@{voc::Any}!operator=@{operator=}}
+\index{operator=@{operator=}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classvoc_1_1Any}{Any}} \& voc\+::\+Any\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Copy assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to be copied \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the current object 
+\end{DoxyReturn}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classvoc_1_1Any_a120a2f1d62f3c1308236981b7d50afc4}\label{classvoc_1_1Any_a120a2f1d62f3c1308236981b7d50afc4}} 
+\index{voc::Any@{voc::Any}!anyCast@{anyCast}}
+\index{anyCast@{anyCast}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{anyCast}{anyCast}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T $\ast$ any\+Cast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvoc_1_1Any}{Any}} $\ast$}]{any }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Cast an \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to a T pointer. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the value to be casted \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em any} & The \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to be casted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to an object of type T, or nullptr if the cast fails 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Any_a559ea31b4e83ce247fd74e4a3f1091ad}\label{classvoc_1_1Any_a559ea31b4e83ce247fd74e4a3f1091ad}} 
+\index{voc::Any@{voc::Any}!anyCast@{anyCast}}
+\index{anyCast@{anyCast}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{anyCast}{anyCast}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T any\+Cast (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&}]{any }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Cast an \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to a T object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the value to be casted \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em any} & The \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to be casted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An object of type T 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Any_a42317844bdf3787058a0454ba884c8b7}\label{classvoc_1_1Any_a42317844bdf3787058a0454ba884c8b7}} 
+\index{voc::Any@{voc::Any}!anyCast@{anyCast}}
+\index{anyCast@{anyCast}!voc::Any@{voc::Any}}
+\doxysubsubsection{\texorpdfstring{anyCast}{anyCast}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const T $\ast$ any\+Cast (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvoc_1_1Any}{Any}} $\ast$}]{any }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Cast an \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to a const T pointer. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the value to be casted \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em any} & The \mbox{\hyperlink{classvoc_1_1Any}{Any}} object to be casted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A const pointer to an object of type T, or nullptr if the cast fails 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Any.\+h\item 
+Any.\+cc\end{DoxyCompactItemize}

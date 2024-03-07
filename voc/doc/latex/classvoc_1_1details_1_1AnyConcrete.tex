@@ -1,0 +1,125 @@
+\hypertarget{classvoc_1_1details_1_1AnyConcrete}{}\doxysection{voc\+::details\+::Any\+Concrete\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classvoc_1_1details_1_1AnyConcrete}\index{voc::details::AnyConcrete$<$ T $>$@{voc::details::AnyConcrete$<$ T $>$}}
+
+
+Concrete class to store any type of value.  
+
+
+
+
+{\ttfamily \#include $<$Any.\+h$>$}
+
+
+
+Inheritance diagram for voc\+::details\+::Any\+Concrete\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{classvoc_1_1details_1_1AnyConcrete__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for voc\+::details\+::Any\+Concrete\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{classvoc_1_1details_1_1AnyConcrete__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename U $>$ }\\\mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete_a75db6acb3e8e816b20120cbfc0bc4e34}{Any\+Concrete}} (U \&\&value)
+\begin{DoxyCompactList}\small\item\em Constructor from a value. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvoc_1_1details_1_1AnyBase}{Any\+Base}} $>$ \mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete_a77220d334f16c1b0ad9486f2e70b6993}{clone}} () const override
+\begin{DoxyCompactList}\small\item\em Clone the current object. \end{DoxyCompactList}\item 
+const T \& \mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete_a5e13d9b36767d47b3577330a3807d078}{get\+Value}} () const
+\begin{DoxyCompactList}\small\item\em Get the stored value. \end{DoxyCompactList}\item 
+const std\+::type\+\_\+info \& \mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete_aa8093815bbf1a2cc24ac271dc3f4df83}{type}} () const override
+\begin{DoxyCompactList}\small\item\em Get the type of the stored value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class voc\+::details\+::\+Any\+Concrete$<$ T $>$}
+Concrete class to store any type of value. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classvoc_1_1details_1_1AnyConcrete_a75db6acb3e8e816b20120cbfc0bc4e34}\label{classvoc_1_1details_1_1AnyConcrete_a75db6acb3e8e816b20120cbfc0bc4e34}} 
+\index{voc::details::AnyConcrete$<$ T $>$@{voc::details::AnyConcrete$<$ T $>$}!AnyConcrete@{AnyConcrete}}
+\index{AnyConcrete@{AnyConcrete}!voc::details::AnyConcrete$<$ T $>$@{voc::details::AnyConcrete$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{AnyConcrete()}{AnyConcrete()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+\mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete}{voc\+::details\+::\+Any\+Concrete}}$<$ T $>$\+::\+Any\+Concrete (\begin{DoxyParamCaption}\item[{U \&\&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor from a value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value to be stored \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classvoc_1_1details_1_1AnyConcrete_a77220d334f16c1b0ad9486f2e70b6993}\label{classvoc_1_1details_1_1AnyConcrete_a77220d334f16c1b0ad9486f2e70b6993}} 
+\index{voc::details::AnyConcrete$<$ T $>$@{voc::details::AnyConcrete$<$ T $>$}!clone@{clone}}
+\index{clone@{clone}!voc::details::AnyConcrete$<$ T $>$@{voc::details::AnyConcrete$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvoc_1_1details_1_1AnyBase}{Any\+Base}} $>$ \mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete}{voc\+::details\+::\+Any\+Concrete}}$<$ T $>$\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Clone the current object. 
+
+\begin{DoxyReturn}{Returns}
+A unique\+\_\+ptr to the cloned object 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classvoc_1_1details_1_1AnyBase_a76a2a7f3138025a38578515328af52f2}{voc\+::details\+::\+Any\+Base}}.
+
+\mbox{\Hypertarget{classvoc_1_1details_1_1AnyConcrete_a5e13d9b36767d47b3577330a3807d078}\label{classvoc_1_1details_1_1AnyConcrete_a5e13d9b36767d47b3577330a3807d078}} 
+\index{voc::details::AnyConcrete$<$ T $>$@{voc::details::AnyConcrete$<$ T $>$}!getValue@{getValue}}
+\index{getValue@{getValue}!voc::details::AnyConcrete$<$ T $>$@{voc::details::AnyConcrete$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getValue()}{getValue()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const T \& \mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete}{voc\+::details\+::\+Any\+Concrete}}$<$ T $>$\+::get\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the stored value. 
+
+\begin{DoxyReturn}{Returns}
+The stored value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1details_1_1AnyConcrete_aa8093815bbf1a2cc24ac271dc3f4df83}\label{classvoc_1_1details_1_1AnyConcrete_aa8093815bbf1a2cc24ac271dc3f4df83}} 
+\index{voc::details::AnyConcrete$<$ T $>$@{voc::details::AnyConcrete$<$ T $>$}!type@{type}}
+\index{type@{type}!voc::details::AnyConcrete$<$ T $>$@{voc::details::AnyConcrete$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{type()}{type()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const std\+::type\+\_\+info \& \mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete}{voc\+::details\+::\+Any\+Concrete}}$<$ T $>$\+::type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Get the type of the stored value. 
+
+\begin{DoxyReturn}{Returns}
+The type\+\_\+info of the stored value 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classvoc_1_1details_1_1AnyBase_ab8bc9e0bbdd0a7787caef011ec370fe3}{voc\+::details\+::\+Any\+Base}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Any.\+h\end{DoxyCompactItemize}

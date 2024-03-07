@@ -1,0 +1,180 @@
+\hypertarget{Optional_8h_source}{}\doxysection{Optional.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef VOC\_OPTIONAL\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define VOC\_OPTIONAL\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <typeinfo>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <stdexcept>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{namespace }voc}
+\DoxyCodeLine{10 \{}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{13   \textcolor{keyword}{struct }\mbox{\hyperlink{structvoc_1_1InPlaceStruct}{InPlaceStruct}}}
+\DoxyCodeLine{14   \{}
+\DoxyCodeLine{15   \};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{18   \textcolor{keyword}{inline} \textcolor{keyword}{constexpr} \mbox{\hyperlink{structvoc_1_1InPlaceStruct}{InPlaceStruct}} InPlace = \{\};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{21   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{22   \textcolor{keyword}{class }\mbox{\hyperlink{classvoc_1_1Optional}{Optional}}}
+\DoxyCodeLine{23   \{}
+\DoxyCodeLine{24   \textcolor{keyword}{public}:}
+\DoxyCodeLine{26     \mbox{\hyperlink{classvoc_1_1Optional_ad47486c557558596ab917a21c54b569c}{Optional}}() : initialized(false) \{\}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{30     \mbox{\hyperlink{classvoc_1_1Optional_a6dd755a96002dbd36c863a405a9f54a6}{Optional}}(\textcolor{keyword}{const} T \&value) : initialized(true)}
+\DoxyCodeLine{31     \{}
+\DoxyCodeLine{32       \textcolor{keyword}{new} (\&data) T(value);}
+\DoxyCodeLine{33     \}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{37     \mbox{\hyperlink{classvoc_1_1Optional_a350ea857dcef00cce2379a123b443806}{Optional}}(T \&\&value) : initialized(true)}
+\DoxyCodeLine{38     \{}
+\DoxyCodeLine{39       \textcolor{keyword}{new} (\&data) T(std::move(value));}
+\DoxyCodeLine{40     \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{45     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{46     \mbox{\hyperlink{classvoc_1_1Optional_a797aa0000af2c7b9421987f6dc9ad06a}{Optional}}(\mbox{\hyperlink{structvoc_1_1InPlaceStruct}{InPlaceStruct}}, Args \&\&...args) : initialized(true)}
+\DoxyCodeLine{47     \{}
+\DoxyCodeLine{48       \textcolor{keyword}{new} (\&data) T(std::forward<Args>(args)...);}
+\DoxyCodeLine{49     \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{53     \mbox{\hyperlink{classvoc_1_1Optional_a6910fb22e96efaaa56feed8b4d979f90}{Optional}}(\textcolor{keyword}{const} \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \&other) : initialized(other.initialized)}
+\DoxyCodeLine{54     \{}
+\DoxyCodeLine{55       \textcolor{keywordflow}{if} (other.initialized)}
+\DoxyCodeLine{56       \{}
+\DoxyCodeLine{57         \textcolor{keyword}{new} (\&data) T(*other.ptr());}
+\DoxyCodeLine{58       \}}
+\DoxyCodeLine{59     \}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{63     \mbox{\hyperlink{classvoc_1_1Optional_a6292f01f9b14714b257fbe0265b65c44}{Optional}}(\mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \&\&other) noexcept : initialized(other.initialized)}
+\DoxyCodeLine{64     \{}
+\DoxyCodeLine{65       \textcolor{keywordflow}{if} (other.initialized)}
+\DoxyCodeLine{66       \{}
+\DoxyCodeLine{67         \textcolor{keyword}{new} (\&data) T(std::move(*other.ptr()));}
+\DoxyCodeLine{68         other.clear(); \textcolor{comment}{// Ensure the moved-\/from object is in a valid state}}
+\DoxyCodeLine{69       \}}
+\DoxyCodeLine{70     \}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{73     \mbox{\hyperlink{classvoc_1_1Optional_acf5d0b510b598c938b01dac936ce195b}{\string~Optional}}()}
+\DoxyCodeLine{74     \{}
+\DoxyCodeLine{75       \mbox{\hyperlink{classvoc_1_1Optional_ad0dacc45577599f745201bad3b2e2034}{clear}}();}
+\DoxyCodeLine{76     \}}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{81     \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \&\mbox{\hyperlink{classvoc_1_1Optional_a21ec94f5e3349d90c428bacd74e09de0}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \&other)}
+\DoxyCodeLine{82     \{}
+\DoxyCodeLine{83       \textcolor{keywordflow}{if} (\textcolor{keyword}{this} != \&other)}
+\DoxyCodeLine{84       \{}
+\DoxyCodeLine{85         \textcolor{keywordflow}{if} (initialized)}
+\DoxyCodeLine{86           \mbox{\hyperlink{classvoc_1_1Optional_ad0dacc45577599f745201bad3b2e2034}{clear}}();}
+\DoxyCodeLine{87         \textcolor{keywordflow}{if} (other.initialized)}
+\DoxyCodeLine{88         \{}
+\DoxyCodeLine{89           \textcolor{keyword}{new} (\&data) T(*other.ptr());}
+\DoxyCodeLine{90           initialized = \textcolor{keyword}{true};}
+\DoxyCodeLine{91         \}}
+\DoxyCodeLine{92       \}}
+\DoxyCodeLine{93       \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{94     \}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{99     \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \&\mbox{\hyperlink{classvoc_1_1Optional_af8a784edb1f925a5ff804ec45c41d86e}{operator=}}(\mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \&\&other) \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{100     \{}
+\DoxyCodeLine{101       \textcolor{keywordflow}{if} (\textcolor{keyword}{this} != \&other)}
+\DoxyCodeLine{102       \{}
+\DoxyCodeLine{103         \textcolor{keywordflow}{if} (initialized)}
+\DoxyCodeLine{104           \mbox{\hyperlink{classvoc_1_1Optional_ad0dacc45577599f745201bad3b2e2034}{clear}}();}
+\DoxyCodeLine{105         \textcolor{keywordflow}{if} (other.initialized)}
+\DoxyCodeLine{106         \{}
+\DoxyCodeLine{107           \textcolor{keyword}{new} (\&data) T(std::move(*other.ptr()));}
+\DoxyCodeLine{108           initialized = \textcolor{keyword}{true};}
+\DoxyCodeLine{109           other.clear(); \textcolor{comment}{// Ensure the moved-\/from object is in a valid state}}
+\DoxyCodeLine{110         \}}
+\DoxyCodeLine{111       \}}
+\DoxyCodeLine{112       \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{113     \}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{117     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classvoc_1_1Optional_a19cdd032e663ef9236dea05062bbcdca}{hasValue}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{118 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{119       \textcolor{keywordflow}{return} initialized;}
+\DoxyCodeLine{120     \}}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{124     \textcolor{keyword}{explicit} \textcolor{keyword}{operator} bool()\textcolor{keyword}{ const}}
+\DoxyCodeLine{125 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{126       \textcolor{keywordflow}{return} \mbox{\hyperlink{classvoc_1_1Optional_a19cdd032e663ef9236dea05062bbcdca}{hasValue}}();}
+\DoxyCodeLine{127     \}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{131     T \&\mbox{\hyperlink{classvoc_1_1Optional_aabb1bb61d2dca845c01954794653faf6}{getValue}}()}
+\DoxyCodeLine{132     \{}
+\DoxyCodeLine{133       \textcolor{keywordflow}{if} (!initialized)}
+\DoxyCodeLine{134         \textcolor{keywordflow}{throw} std::runtime\_error(\textcolor{stringliteral}{"{}Optional has no value"{}});}
+\DoxyCodeLine{135       \textcolor{keywordflow}{return} *ptr();}
+\DoxyCodeLine{136     \}}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{140     \textcolor{keyword}{const} T \&\mbox{\hyperlink{classvoc_1_1Optional_a16a1486366d12a89e5a72924c9c99f03}{getValue}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{141 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{142       \textcolor{keywordflow}{if} (!initialized)}
+\DoxyCodeLine{143         \textcolor{keywordflow}{throw} std::runtime\_error(\textcolor{stringliteral}{"{}Optional has no value"{}});}
+\DoxyCodeLine{144       \textcolor{keywordflow}{return} *ptr();}
+\DoxyCodeLine{145     \}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{151     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{152     T \mbox{\hyperlink{classvoc_1_1Optional_a8c5c66bec189aa254e1c97815d419edf}{getValueOr}}(U \&\&defaultValue)\textcolor{keyword}{ const}}
+\DoxyCodeLine{153 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{154       \textcolor{keywordflow}{return} initialized ? *ptr() : \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::forward<U>(defaultValue));}
+\DoxyCodeLine{155     \}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{158     \textcolor{keywordtype}{void} \mbox{\hyperlink{classvoc_1_1Optional_ad0dacc45577599f745201bad3b2e2034}{clear}}()}
+\DoxyCodeLine{159     \{}
+\DoxyCodeLine{160       \textcolor{keywordflow}{if} (initialized)}
+\DoxyCodeLine{161       \{}
+\DoxyCodeLine{162         ptr()-\/>\string~T(); \textcolor{comment}{// Call the destructor explicitly}}
+\DoxyCodeLine{163         initialized = \textcolor{keyword}{false};}
+\DoxyCodeLine{164       \}}
+\DoxyCodeLine{165     \}}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{169     T \&\mbox{\hyperlink{classvoc_1_1Optional_a4e3b0a8019438c22c4fc20cfa4ec484e}{operator*}}()}
+\DoxyCodeLine{170     \{}
+\DoxyCodeLine{171       \textcolor{keywordflow}{return} *ptr();}
+\DoxyCodeLine{172     \}}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{176     \textcolor{keyword}{const} T \&\mbox{\hyperlink{classvoc_1_1Optional_a0f3c36e31c49cc222e31f25633ca1715}{operator*}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{177 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{178       \textcolor{keywordflow}{return} *ptr();}
+\DoxyCodeLine{179     \}}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{183     T *\mbox{\hyperlink{classvoc_1_1Optional_a24655dd73ca770486714c5cfa82f6273}{operator-\/>}}()}
+\DoxyCodeLine{184     \{}
+\DoxyCodeLine{185       \textcolor{keywordflow}{return} ptr();}
+\DoxyCodeLine{186     \}}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{190     \textcolor{keyword}{const} T *\mbox{\hyperlink{classvoc_1_1Optional_a50bd1373ca16fbb3058aa23bd30305b2}{operator-\/>}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{191 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{192       \textcolor{keywordflow}{return} ptr();}
+\DoxyCodeLine{193     \}}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195   \textcolor{keyword}{private}:}
+\DoxyCodeLine{196     \textcolor{keyword}{alignas}(T) \textcolor{keyword}{mutable} \textcolor{keywordtype}{char} data[\textcolor{keyword}{sizeof}(T)]; }
+\DoxyCodeLine{197     \textcolor{keywordtype}{bool} initialized = \textcolor{keyword}{false}; }
+\DoxyCodeLine{198 }
+\DoxyCodeLine{201     T *ptr()}
+\DoxyCodeLine{202     \{}
+\DoxyCodeLine{203       \textcolor{keywordflow}{return} \textcolor{keyword}{reinterpret\_cast<}T *\textcolor{keyword}{>}(\&data);}
+\DoxyCodeLine{204     \}}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{208     \textcolor{keyword}{const} T *ptr()\textcolor{keyword}{ const}}
+\DoxyCodeLine{209 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{210       \textcolor{keywordflow}{return} \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const }T *\textcolor{keyword}{>}(\&data);}
+\DoxyCodeLine{211     \}}
+\DoxyCodeLine{212   \};}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{219   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{220   Optional<T> makeOptional(Args \&\&...args)}
+\DoxyCodeLine{221   \{}
+\DoxyCodeLine{222     \textcolor{keywordflow}{return} Optional<T>(InPlace, std::forward<Args>(args)...);}
+\DoxyCodeLine{223   \}}
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225 \} \textcolor{comment}{// namespace voc}}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// VOC\_OPTIONAL\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,332 @@
+\hypertarget{classvoc_1_1Optional}{}\doxysection{voc\+::Optional\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classvoc_1_1Optional}\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+
+
+Class to store a value or no value.  
+
+
+
+
+{\ttfamily \#include $<$Optional.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classvoc_1_1Optional_ad47486c557558596ab917a21c54b569c}\label{classvoc_1_1Optional_ad47486c557558596ab917a21c54b569c}} 
+{\bfseries Optional} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Optional_a6dd755a96002dbd36c863a405a9f54a6}{Optional}} (const T \&value)
+\begin{DoxyCompactList}\small\item\em Constructor from a value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Optional_a350ea857dcef00cce2379a123b443806}{Optional}} (T \&\&value)
+\begin{DoxyCompactList}\small\item\em Constructor from a rvalue. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\\mbox{\hyperlink{classvoc_1_1Optional_a797aa0000af2c7b9421987f6dc9ad06a}{Optional}} (\mbox{\hyperlink{structvoc_1_1InPlaceStruct}{In\+Place\+Struct}}, Args \&\&...args)
+\begin{DoxyCompactList}\small\item\em Constructor for in-\/place construction. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Optional_a6910fb22e96efaaa56feed8b4d979f90}{Optional}} (const \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Optional_a6292f01f9b14714b257fbe0265b65c44}{Optional}} (\mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em Move constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classvoc_1_1Optional_acf5d0b510b598c938b01dac936ce195b}\label{classvoc_1_1Optional_acf5d0b510b598c938b01dac936ce195b}} 
+{\bfseries $\sim$\+Optional} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \& \mbox{\hyperlink{classvoc_1_1Optional_a21ec94f5e3349d90c428bacd74e09de0}{operator=}} (const \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy assignment operator. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \& \mbox{\hyperlink{classvoc_1_1Optional_af8a784edb1f925a5ff804ec45c41d86e}{operator=}} (\mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em Move assignment operator. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classvoc_1_1Optional_a19cdd032e663ef9236dea05062bbcdca}{has\+Value}} () const
+\begin{DoxyCompactList}\small\item\em Check if the \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} object has a value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classvoc_1_1Optional_a00e4745cec07355ab1a87f1b92dc5aa3}{operator bool}} () const
+\begin{DoxyCompactList}\small\item\em Conversion operator to bool. \end{DoxyCompactList}\item 
+T \& \mbox{\hyperlink{classvoc_1_1Optional_aabb1bb61d2dca845c01954794653faf6}{get\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the stored value. \end{DoxyCompactList}\item 
+const T \& \mbox{\hyperlink{classvoc_1_1Optional_a16a1486366d12a89e5a72924c9c99f03}{get\+Value}} () const
+\begin{DoxyCompactList}\small\item\em Get the stored value. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename U $>$ }\\T \mbox{\hyperlink{classvoc_1_1Optional_a8c5c66bec189aa254e1c97815d419edf}{get\+Value\+Or}} (U \&\&default\+Value) const
+\begin{DoxyCompactList}\small\item\em Get the stored value or a default value. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classvoc_1_1Optional_ad0dacc45577599f745201bad3b2e2034}\label{classvoc_1_1Optional_ad0dacc45577599f745201bad3b2e2034}} 
+void {\bfseries clear} ()
+\begin{DoxyCompactList}\small\item\em Clear the \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} object. \end{DoxyCompactList}\item 
+T \& \mbox{\hyperlink{classvoc_1_1Optional_a4e3b0a8019438c22c4fc20cfa4ec484e}{operator$\ast$}} ()
+\begin{DoxyCompactList}\small\item\em Dereference operator. \end{DoxyCompactList}\item 
+const T \& \mbox{\hyperlink{classvoc_1_1Optional_a0f3c36e31c49cc222e31f25633ca1715}{operator$\ast$}} () const
+\begin{DoxyCompactList}\small\item\em Dereference operator. \end{DoxyCompactList}\item 
+T $\ast$ \mbox{\hyperlink{classvoc_1_1Optional_a24655dd73ca770486714c5cfa82f6273}{operator-\/$>$}} ()
+\begin{DoxyCompactList}\small\item\em Arrow operator. \end{DoxyCompactList}\item 
+const T $\ast$ \mbox{\hyperlink{classvoc_1_1Optional_a50bd1373ca16fbb3058aa23bd30305b2}{operator-\/$>$}} () const
+\begin{DoxyCompactList}\small\item\em Arrow operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class voc\+::\+Optional$<$ T $>$}
+Class to store a value or no value. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classvoc_1_1Optional_a6dd755a96002dbd36c863a405a9f54a6}\label{classvoc_1_1Optional_a6dd755a96002dbd36c863a405a9f54a6}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!Optional@{Optional}}
+\index{Optional@{Optional}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Optional()}{Optional()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::\+Optional (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor from a value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value to be stored \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classvoc_1_1Optional_a350ea857dcef00cce2379a123b443806}\label{classvoc_1_1Optional_a350ea857dcef00cce2379a123b443806}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!Optional@{Optional}}
+\index{Optional@{Optional}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Optional()}{Optional()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::\+Optional (\begin{DoxyParamCaption}\item[{T \&\&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor from a rvalue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value to be stored \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classvoc_1_1Optional_a797aa0000af2c7b9421987f6dc9ad06a}\label{classvoc_1_1Optional_a797aa0000af2c7b9421987f6dc9ad06a}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!Optional@{Optional}}
+\index{Optional@{Optional}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Optional()}{Optional()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename... Args$>$ \\
+\mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::\+Optional (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvoc_1_1InPlaceStruct}{In\+Place\+Struct}}}]{,  }\item[{Args \&\&...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor for in-\/place construction. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Args} & The types of the arguments to be passed to the constructor of T \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em ...\+args} & The arguments to be passed to the constructor of T \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classvoc_1_1Optional_a6910fb22e96efaaa56feed8b4d979f90}\label{classvoc_1_1Optional_a6910fb22e96efaaa56feed8b4d979f90}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!Optional@{Optional}}
+\index{Optional@{Optional}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Optional()}{Optional()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::\+Optional (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvoc_1_1Optional}{Optional}}$<$ T $>$ \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} object to be copied \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classvoc_1_1Optional_a6292f01f9b14714b257fbe0265b65c44}\label{classvoc_1_1Optional_a6292f01f9b14714b257fbe0265b65c44}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!Optional@{Optional}}
+\index{Optional@{Optional}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Optional()}{Optional()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::\+Optional (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvoc_1_1Optional}{Optional}}$<$ T $>$ \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Move constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} object to be moved \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classvoc_1_1Optional_aabb1bb61d2dca845c01954794653faf6}\label{classvoc_1_1Optional_aabb1bb61d2dca845c01954794653faf6}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!getValue@{getValue}}
+\index{getValue@{getValue}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getValue()}{getValue()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \& \mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::get\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the stored value. 
+
+\begin{DoxyReturn}{Returns}
+The stored value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Optional_a16a1486366d12a89e5a72924c9c99f03}\label{classvoc_1_1Optional_a16a1486366d12a89e5a72924c9c99f03}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!getValue@{getValue}}
+\index{getValue@{getValue}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getValue()}{getValue()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const T \& \mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::get\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the stored value. 
+
+\begin{DoxyReturn}{Returns}
+The stored value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Optional_a8c5c66bec189aa254e1c97815d419edf}\label{classvoc_1_1Optional_a8c5c66bec189aa254e1c97815d419edf}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!getValueOr@{getValueOr}}
+\index{getValueOr@{getValueOr}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getValueOr()}{getValueOr()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+T \mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::get\+Value\+Or (\begin{DoxyParamCaption}\item[{U \&\&}]{default\+Value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the stored value or a default value. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em U} & The type of the default value \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em default\+Value} & The default value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The stored value if it exists, otherwise the default value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Optional_a19cdd032e663ef9236dea05062bbcdca}\label{classvoc_1_1Optional_a19cdd032e663ef9236dea05062bbcdca}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!hasValue@{hasValue}}
+\index{hasValue@{hasValue}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{hasValue()}{hasValue()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::has\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if the \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} object has a value. 
+
+\begin{DoxyReturn}{Returns}
+true if the \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} object has a value, false otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Optional_a00e4745cec07355ab1a87f1b92dc5aa3}\label{classvoc_1_1Optional_a00e4745cec07355ab1a87f1b92dc5aa3}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!operator bool@{operator bool}}
+\index{operator bool@{operator bool}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator bool()}{operator bool()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::operator bool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Conversion operator to bool. 
+
+\begin{DoxyReturn}{Returns}
+true if the \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} object has a value, false otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Optional_a4e3b0a8019438c22c4fc20cfa4ec484e}\label{classvoc_1_1Optional_a4e3b0a8019438c22c4fc20cfa4ec484e}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \& \mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::operator$\ast$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Dereference operator. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the stored value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Optional_a0f3c36e31c49cc222e31f25633ca1715}\label{classvoc_1_1Optional_a0f3c36e31c49cc222e31f25633ca1715}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const T \& \mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::operator$\ast$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Dereference operator. 
+
+\begin{DoxyReturn}{Returns}
+A const reference to the stored value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Optional_a24655dd73ca770486714c5cfa82f6273}\label{classvoc_1_1Optional_a24655dd73ca770486714c5cfa82f6273}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!operator-\/$>$@{operator-\/$>$}}
+\index{operator-\/$>$@{operator-\/$>$}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/$>$()}{operator->()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T $\ast$ \mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::operator-\/$>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Arrow operator. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to the stored value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Optional_a50bd1373ca16fbb3058aa23bd30305b2}\label{classvoc_1_1Optional_a50bd1373ca16fbb3058aa23bd30305b2}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!operator-\/$>$@{operator-\/$>$}}
+\index{operator-\/$>$@{operator-\/$>$}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/$>$()}{operator->()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const T $\ast$ \mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::operator-\/$>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Arrow operator. 
+
+\begin{DoxyReturn}{Returns}
+A const pointer to the stored value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Optional_a21ec94f5e3349d90c428bacd74e09de0}\label{classvoc_1_1Optional_a21ec94f5e3349d90c428bacd74e09de0}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \& \mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvoc_1_1Optional}{Optional}}$<$ T $>$ \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Copy assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} object to be copied \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the current object 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classvoc_1_1Optional_af8a784edb1f925a5ff804ec45c41d86e}\label{classvoc_1_1Optional_af8a784edb1f925a5ff804ec45c41d86e}} 
+\index{voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!voc::Optional$<$ T $>$@{voc::Optional$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classvoc_1_1Optional}{Optional}} \& \mbox{\hyperlink{classvoc_1_1Optional}{voc\+::\+Optional}}$<$ T $>$\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvoc_1_1Optional}{Optional}}$<$ T $>$ \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Move assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other \mbox{\hyperlink{classvoc_1_1Optional}{Optional}} object to be moved \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the current object 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Optional.\+h\end{DoxyCompactItemize}

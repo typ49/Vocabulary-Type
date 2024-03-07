@@ -1,0 +1,165 @@
+\hypertarget{Any_8h_source}{}\doxysection{Any.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef VOC\_ANY\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define VOC\_ANY\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <typeinfo>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <stdexcept>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{namespace }voc}
+\DoxyCodeLine{10 \{}
+\DoxyCodeLine{11   \textcolor{keyword}{namespace }details}
+\DoxyCodeLine{12   \{}
+\DoxyCodeLine{14     \textcolor{keyword}{class }\mbox{\hyperlink{classvoc_1_1details_1_1AnyBase}{AnyBase}}}
+\DoxyCodeLine{15     \{}
+\DoxyCodeLine{16     \textcolor{keyword}{public}:}
+\DoxyCodeLine{18       \textcolor{keyword}{virtual} \mbox{\hyperlink{classvoc_1_1details_1_1AnyBase_a89db92df22ad88cb19767d0eb38a2410}{\string~AnyBase}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{22       \textcolor{keyword}{virtual} std::unique\_ptr<AnyBase> \mbox{\hyperlink{classvoc_1_1details_1_1AnyBase_a76a2a7f3138025a38578515328af52f2}{clone}}() \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{26       \textcolor{keyword}{virtual} \textcolor{keyword}{const} std::type\_info \&\mbox{\hyperlink{classvoc_1_1details_1_1AnyBase_ab8bc9e0bbdd0a7787caef011ec370fe3}{type}}() \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{27     \};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{30     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{31     \textcolor{keyword}{class }\mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete}{AnyConcrete}} : \textcolor{keyword}{public} \mbox{\hyperlink{classvoc_1_1details_1_1AnyBase}{AnyBase}}}
+\DoxyCodeLine{32     \{}
+\DoxyCodeLine{33     \textcolor{keyword}{public}:}
+\DoxyCodeLine{36       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{37       \mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete_a75db6acb3e8e816b20120cbfc0bc4e34}{AnyConcrete}}(U \&\&value) : value(std::forward<U>(value)) \{\}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{41       std::unique\_ptr<AnyBase> \mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete_a77220d334f16c1b0ad9486f2e70b6993}{clone}}()\textcolor{keyword}{ const override}}
+\DoxyCodeLine{42 \textcolor{keyword}{      }\{}
+\DoxyCodeLine{43         \textcolor{keywordflow}{return} std::make\_unique<AnyConcrete<T>>(*this);}
+\DoxyCodeLine{44       \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{48       \textcolor{keyword}{const} T \&\mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete_a5e13d9b36767d47b3577330a3807d078}{getValue}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{49 \textcolor{keyword}{      }\{}
+\DoxyCodeLine{50         \textcolor{keywordflow}{return} value;}
+\DoxyCodeLine{51       \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{55       \textcolor{keyword}{const} std::type\_info \&\mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete_aa8093815bbf1a2cc24ac271dc3f4df83}{type}}()\textcolor{keyword}{ const override}}
+\DoxyCodeLine{56 \textcolor{keyword}{      }\{}
+\DoxyCodeLine{57         \textcolor{keywordflow}{return} \textcolor{keyword}{typeid}(T);}
+\DoxyCodeLine{58       \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{keyword}{private}:}
+\DoxyCodeLine{61       T value; }
+\DoxyCodeLine{62     \};}
+\DoxyCodeLine{63   \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{66   \textcolor{keyword}{struct }\mbox{\hyperlink{structvoc_1_1InPlaceTypeStruct}{InPlaceTypeStruct}}}
+\DoxyCodeLine{67   \{}
+\DoxyCodeLine{68   \};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{71   \textcolor{keyword}{inline} \textcolor{keyword}{constexpr} \mbox{\hyperlink{structvoc_1_1InPlaceTypeStruct}{InPlaceTypeStruct<T>}} InPlaceType = \{\};}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{74   \textcolor{keyword}{class }\mbox{\hyperlink{classvoc_1_1Any}{Any}}}
+\DoxyCodeLine{75   \{}
+\DoxyCodeLine{76   \textcolor{keyword}{private}:}
+\DoxyCodeLine{77     std::unique\_ptr<details::AnyBase> content; }
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79   \textcolor{keyword}{public}:}
+\DoxyCodeLine{81     \mbox{\hyperlink{classvoc_1_1Any_ac66dd8fcc8f28f0473788d3ef91a39d0}{Any}}();}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{86     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename} std::enable\_if<!std::is\_same<Any, std::decay\_t<T>>::value>::type * = \textcolor{keywordtype}{nullptr}>}
+\DoxyCodeLine{87     \mbox{\hyperlink{classvoc_1_1Any_a8e55cb64eee7825d13ccf4c3b02e6445}{Any}}(T \&\&value) : content(new details::AnyConcrete<std::decay\_t<T>>(std::forward<T>(value))) \{\}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{94     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{95     \mbox{\hyperlink{classvoc_1_1Any_ac108febe35036d5840732a26f289d4c7}{Any}}(\mbox{\hyperlink{structvoc_1_1InPlaceTypeStruct}{InPlaceTypeStruct<T>}}, Args \&\&...args) : content(new details::AnyConcrete<T>(T(std::forward<Args>(args)...))) \{\}}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{99     \mbox{\hyperlink{classvoc_1_1Any_a5f598604f26becc71200358cd4c94e10}{Any}}(\textcolor{keyword}{const} \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&other) : content(other.content ? other.content-\/>clone() : nullptr) \{\}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{103     \mbox{\hyperlink{classvoc_1_1Any_ab579d781cf5dcd508dd230d2210b0ad2}{Any}}(\mbox{\hyperlink{classvoc_1_1Any}{Any}} \&\&other) noexcept : content(std::move(other.content)) \{\}}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{108     \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&\mbox{\hyperlink{classvoc_1_1Any_a06eafa06cb413469862afd6d219e8756}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&other)}
+\DoxyCodeLine{109     \{}
+\DoxyCodeLine{110       \textcolor{keywordflow}{if} (\textcolor{keyword}{this} != \&other)}
+\DoxyCodeLine{111       \{}
+\DoxyCodeLine{112         content = other.content ? other.content-\/>clone() : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{113       \}}
+\DoxyCodeLine{114       \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{115     \}}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{120     \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&\mbox{\hyperlink{classvoc_1_1Any_a907f9435ee2c969e5f89dc27d44b0d62}{operator=}}(\mbox{\hyperlink{classvoc_1_1Any}{Any}} \&\&other) \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{121     \{}
+\DoxyCodeLine{122       content = std::move(other.content);}
+\DoxyCodeLine{123       \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{124     \}}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{128     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classvoc_1_1Any_a4b84314332d0e87e9194b6984b7b9c34}{hasValue}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{132     \textcolor{keyword}{operator} bool() \textcolor{keyword}{const};}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{135     \textcolor{keywordtype}{void} \mbox{\hyperlink{classvoc_1_1Any_a4c310bfebaf73f27aa8a04090cfdccf8}{clear}}();}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{139     \textcolor{keyword}{const} std::type\_info \&\mbox{\hyperlink{classvoc_1_1Any_a6e7a1261e82d8b5f07f8e3a258d330f0}{getType}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{142     \textcolor{keyword}{friend} T \mbox{\hyperlink{classvoc_1_1Any_a559ea31b4e83ce247fd74e4a3f1091ad}{anyCast}}(\textcolor{keyword}{const} \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&any);}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{145     \textcolor{keyword}{friend} T *\mbox{\hyperlink{classvoc_1_1Any_a559ea31b4e83ce247fd74e4a3f1091ad}{anyCast}}(\mbox{\hyperlink{classvoc_1_1Any}{Any}} *any);}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{148     \textcolor{keyword}{friend} \textcolor{keyword}{const} T *\mbox{\hyperlink{classvoc_1_1Any_a559ea31b4e83ce247fd74e4a3f1091ad}{anyCast}}(\textcolor{keyword}{const} \mbox{\hyperlink{classvoc_1_1Any}{Any}} *any);}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{152     \mbox{\hyperlink{classvoc_1_1details_1_1AnyBase}{details::AnyBase}} *\mbox{\hyperlink{classvoc_1_1Any_ae8815c9f589921027846a0da741f6989}{contentPtr}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} content.get(); \};}
+\DoxyCodeLine{153   \};}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{160   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{161   Any makeAny(Args \&\&...args)}
+\DoxyCodeLine{162   \{}
+\DoxyCodeLine{163     \textcolor{keywordflow}{return} Any(InPlaceType<T>, std::forward<Args>(args)...);}
+\DoxyCodeLine{164   \}}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{170   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{171   T anyCast(\textcolor{keyword}{const} \mbox{\hyperlink{classvoc_1_1Any}{Any}} \&any)}
+\DoxyCodeLine{172   \{}
+\DoxyCodeLine{173     \textcolor{keywordflow}{if} (!any.\mbox{\hyperlink{classvoc_1_1Any_a4b84314332d0e87e9194b6984b7b9c34}{hasValue}}() || any.\mbox{\hyperlink{classvoc_1_1Any_a6e7a1261e82d8b5f07f8e3a258d330f0}{getType}}() != \textcolor{keyword}{typeid}(T))}
+\DoxyCodeLine{174     \{}
+\DoxyCodeLine{175       \textcolor{keywordflow}{throw} std::bad\_cast();}
+\DoxyCodeLine{176     \}}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178     \textcolor{keyword}{auto} concrete = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete}{details::AnyConcrete<std::decay\_t<T>}}\textcolor{keyword}{>} *>(any.content.get());}
+\DoxyCodeLine{179     \textcolor{keywordflow}{if} (!concrete)}
+\DoxyCodeLine{180     \{}
+\DoxyCodeLine{181       \textcolor{keywordflow}{throw} std::bad\_cast();}
+\DoxyCodeLine{182     \}}
+\DoxyCodeLine{183     \textcolor{keywordflow}{return} concrete-\/>getValue();}
+\DoxyCodeLine{184   \}}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{190   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{191   T anyCast(\mbox{\hyperlink{classvoc_1_1Any}{Any}} *any)}
+\DoxyCodeLine{192   \{}
+\DoxyCodeLine{193     \textcolor{keywordflow}{if} (any \&\& any-\/>\mbox{\hyperlink{classvoc_1_1Any_a4b84314332d0e87e9194b6984b7b9c34}{hasValue}}() \&\& any-\/>\mbox{\hyperlink{classvoc_1_1Any_a6e7a1261e82d8b5f07f8e3a258d330f0}{getType}}() == \textcolor{keyword}{typeid}(T))}
+\DoxyCodeLine{194     \{}
+\DoxyCodeLine{195       \textcolor{keyword}{auto} concrete = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete}{details::AnyConcrete<T>}} *\textcolor{keyword}{>}(any-\/>\mbox{\hyperlink{classvoc_1_1Any_ae8815c9f589921027846a0da741f6989}{contentPtr}}());}
+\DoxyCodeLine{196       \textcolor{keywordflow}{if} (concrete)}
+\DoxyCodeLine{197       \{}
+\DoxyCodeLine{198         \textcolor{keywordflow}{return} concrete-\/>\mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete_a5e13d9b36767d47b3577330a3807d078}{getValue}}();}
+\DoxyCodeLine{199       \}}
+\DoxyCodeLine{200     \}}
+\DoxyCodeLine{201     \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{202   \}}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{208   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{209   \textcolor{keyword}{const} T *anyCast(\textcolor{keyword}{const} \mbox{\hyperlink{classvoc_1_1Any}{Any}} *any)}
+\DoxyCodeLine{210   \{}
+\DoxyCodeLine{211     \textcolor{keyword}{auto} concrete = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete}{details::AnyConcrete<T>}} *\textcolor{keyword}{>}(any-\/>content.get());}
+\DoxyCodeLine{212     \textcolor{keywordflow}{if} (concrete)}
+\DoxyCodeLine{213     \{}
+\DoxyCodeLine{214       \textcolor{keywordflow}{return} \&concrete-\/>\mbox{\hyperlink{classvoc_1_1details_1_1AnyConcrete_a5e13d9b36767d47b3577330a3807d078}{getValue}}();}
+\DoxyCodeLine{215     \}}
+\DoxyCodeLine{216     \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{217   \}}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219 \} \textcolor{comment}{// namespace voc}}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// VOC\_ANY\_H}}
+
+\end{DoxyCode}
