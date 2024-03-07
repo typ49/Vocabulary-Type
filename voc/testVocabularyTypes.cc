@@ -5,8 +5,8 @@
 #define VOC_OPTIONAL_TEST 1 // for testing the Optional class
 #endif
 
-#ifndef DEBBUG
-#define DEBBUG 0 // for testing function that does not get tested in the main test
+#ifndef DEBUG
+#define DEBUG 1 // for testing function that does not get tested in the main test
 #endif
 
 #include <gtest/gtest.h>
@@ -19,12 +19,35 @@
  * TESTS FOR ANY CLASS      *
  ****************************/
 
-TEST(AnyTest, DefaultConstructor)
+TEST(AnyConstructorTest, Constructor)
+{
+  voc::Any a(42);
+  EXPECT_EQ(voc::anyCast<int>(a), 42);
+}
+
+TEST(AnyConstructorTest, CopyConstructor)
+{
+  voc::Any a(42);
+  voc::Any b(a);
+  EXPECT_EQ(voc::anyCast<int>(b), 42);
+}
+
+TEST(AnyConstructorTest, MoveConstructor)
+{
+  voc::Any a(42);
+  voc::Any b(std::move(a));
+  EXPECT_EQ(voc::anyCast<int>(b), 42);
+}
+
+TEST(AnyConstructorTest, DefaultConstructor)
 {
   voc::Any any;
   EXPECT_FALSE(any.hasValue());
 }
 
+/*
+Any test suite
+*/
 TEST(AnyTest, BoolConversion)
 {
   voc::Any any;
@@ -167,6 +190,165 @@ TEST(AnyTest, List_Of_Any_But_Different_Type)
   EXPECT_TRUE(voc::anyCast<std::string>(any_list[2]) == "The cake is a lie!");
   EXPECT_TRUE(voc::anyCast<Point>(any_list[3]) == Point(42, 24));
 }
+
+/*
+Any Lvalue test suite
+*/
+TEST(AnyLvalueTest, LvalueTest)
+{
+  int lvalue = 42;
+  voc::Any a(lvalue);
+  EXPECT_EQ(voc::anyCast<int>(a), 42);
+}
+
+TEST(AnyLvalueTest, LvalueAssignmentTest)
+{
+  int lvalue = 42;
+  voc::Any a;
+  a = lvalue; // assign lvalue to Any
+  EXPECT_EQ(voc::anyCast<int>(a), 42);
+}
+
+TEST(AnyLvalueTest, LvalueMakeAnyTest)
+{
+  int lvalue = 42;
+  voc::Any a = voc::makeAny<int>(lvalue);
+  EXPECT_EQ(voc::anyCast<int>(a), 42);
+}
+
+/*
+Any Rvalue test suite
+*/
+TEST(AnyRvalueTest, RvalueTest)
+{
+  voc::Any a(42); // 42 is an rvalue
+  EXPECT_EQ(voc::anyCast<int>(a), 42);
+}
+
+TEST(AnyRvalueTest, RvalueAssignmentTest)
+{
+  voc::Any a;
+  a = 42; // assign rvalue to Any
+  EXPECT_EQ(voc::anyCast<int>(a), 42);
+}
+
+TEST(AnyRvalueTest, RvalueMakeAnyTest)
+{
+  voc::Any a = voc::makeAny<int>(42); // 42 is an rvalue
+  EXPECT_EQ(voc::anyCast<int>(a), 42);
+}
+
+/*
+Any cast test suite
+*/
+TEST(AnyCastTest, AnyCast)
+{
+  // L value
+  voc::Any any(42);
+  int value = voc::anyCast<int>(any);
+  EXPECT_EQ(value, 42);
+  // R value
+  int value2 = voc::anyCast<int>(voc::Any(42));
+  EXPECT_EQ(value2, 42);
+}
+
+TEST(AnyCastTest, AnyCastConst)
+{
+  const voc::Any any(42);
+  const int value = voc::anyCast<int>(any);
+  EXPECT_EQ(value, 42);
+  const int value2 = voc::anyCast<int>(voc::Any(42));
+  EXPECT_EQ(value2, 42);
+}
+
+TEST(AnyCastTest, AnyCastPointer)
+{
+  int original = 42;
+  voc::Any any(&original);
+  int *value = voc::anyCast<int *>(&any);
+  ASSERT_NE(value, nullptr);
+  EXPECT_EQ(*value, 42);
+}
+
+/*
+Any mutant test suite
+*/
+TEST(AnyMutantTest, MutantTest_Constructor)
+{
+  voc::Any a(42);
+  EXPECT_NE(voc::anyCast<int>(a), 43); // mutant: change 42 to 43 in constructor
+}
+
+TEST(AnyMutantTest, MutantTest_CopyConstructor)
+{
+  voc::Any a(42);
+  voc::Any b(a);
+  EXPECT_NE(voc::anyCast<int>(b), 43); // mutant: change 42 to 43 in copy constructor
+}
+
+TEST(AnyMutantTest, MutantTest_MoveConstructor)
+{
+  voc::Any a(42);
+  voc::Any b(std::move(a));
+  EXPECT_NE(voc::anyCast<int>(b), 43); // mutant: change 42 to 43 in move constructor
+}
+
+TEST(AnyMutantTest, MutantTest_CopyAssignment)
+{
+  voc::Any a(42);
+  voc::Any b;
+  b = a;
+  EXPECT_NE(voc::anyCast<int>(b), 43); // mutant: change 42 to 43 in copy assignment
+}
+
+TEST(AnyMutantTest, MutantTest_MoveAssignment)
+{
+  voc::Any a(42);
+  voc::Any b;
+  b = std::move(a);
+  EXPECT_NE(voc::anyCast<int>(b), 43); // mutant: change 42 to 43 in move assignment
+}
+
+TEST(AnyMutantTest, MutantTest_AnyCastNonPointerType)
+{
+  voc::Any a(42);
+  EXPECT_NE(voc::anyCast<int>(a), 43); // mutant: change 42 to 43 in anyCast
+}
+
+TEST(AnyMutantTest, MutantTest_AnyCastPointerType)
+{
+  int original = 42;
+  voc::Any a(&original);
+  int *value = voc::anyCast<int *>(&a);
+  EXPECT_NE(*value, 43); // mutant: change 42 to 43 in anyCast
+}
+
+TEST(AnyMutantTest, MutantTest_AnyCastConstType)
+{
+  const voc::Any any(42);
+  const int value = voc::anyCast<int>(any);
+  EXPECT_NE(value, 43); // mutant: change 42 to 43 in anyCast
+}
+
+TEST(AnyMutantTest, MutantTest_HasValue)
+{
+  voc::Any a(42);
+  a.clear();
+  EXPECT_FALSE(a.hasValue()); // mutant: change clear to not clear the value
+}
+
+TEST(AnyMutantTest, MutantTest_GetType)
+{
+  voc::Any a(42);
+  EXPECT_NE(a.getType(), typeid(double)); // mutant: change int to double in getType
+}
+
+TEST(AnyMutantTest, MutantTest_MakeAny)
+{
+  voc::Any a = voc::makeAny<int>(42);
+  EXPECT_NE(voc::anyCast<int>(a), 43); // mutant: change 42 to 43 in makeAny
+}
+
 #endif // VOC_ANY_TEST
 
 #if VOC_OPTIONAL_TEST
@@ -174,10 +356,54 @@ TEST(AnyTest, List_Of_Any_But_Different_Type)
  * TESTS FOR OPTIONAL CLASS *
  ****************************/
 
-TEST(OptionalTest, DefaultConstructor)
+/*
+Optional constructor suite
+*/
+TEST(OptionalConstructorTest, DefaultConstructor)
 {
   voc::Optional<int> opt;
   EXPECT_FALSE(opt.hasValue());
+}
+
+TEST(OptionalConstructorTest, ValueConstructor)
+{
+  voc::Optional<int> opt(42);
+  EXPECT_TRUE(opt.hasValue());
+  EXPECT_EQ(opt.getValue(), 42);
+}
+
+TEST(OptionalConstructorTest, CopyConstructor)
+{
+  voc::Optional<int> opt1(42);
+  voc::Optional<int> opt2(opt1);
+  EXPECT_TRUE(opt2.hasValue());
+  EXPECT_EQ(opt2.getValue(), 42);
+}
+
+TEST(OptionalConstructorTest, MoveConstructor)
+{
+  voc::Optional<int> opt1(42);
+  voc::Optional<int> opt2(std::move(opt1));
+  EXPECT_TRUE(opt2.hasValue());
+  EXPECT_EQ(opt2.getValue(), 42);
+}
+
+TEST(OptionalConstructorTest, CopyAssignment)
+{
+  voc::Optional<int> opt1(42);
+  voc::Optional<int> opt2;
+  opt2 = opt1;
+  EXPECT_TRUE(opt2.hasValue());
+  EXPECT_EQ(opt2.getValue(), 42);
+}
+
+TEST(OptionalConstructorTest, MoveAssignment)
+{
+  voc::Optional<int> opt1(42);
+  voc::Optional<int> opt2;
+  opt2 = std::move(opt1);
+  EXPECT_TRUE(opt2.hasValue());
+  EXPECT_EQ(opt2.getValue(), 42);
 }
 
 TEST(OptionalTest, BoolConversion)
@@ -289,6 +515,114 @@ TEST(OptionalTest, CaseOfUsage)
   {
     std::cout << e.what() << std::endl; // throw std::runtime_error, no initialized
   }
+}
+
+/*
+Optinal Lvalue test suite
+*/
+TEST(OptionalLvalueTest, LvalueTest)
+{
+  int lvalue = 42;
+  voc::Optional<int> opt(lvalue);
+  EXPECT_TRUE(opt.hasValue());
+  EXPECT_EQ(opt.getValue(), 42);
+}
+
+TEST(OptionalLvalueTest, LvalueAssignmentTest)
+{
+  int lvalue = 42;
+  voc::Optional<int> opt;
+  opt = lvalue; // assign lvalue to Optional
+  EXPECT_TRUE(opt.hasValue());
+  EXPECT_EQ(opt.getValue(), 42);
+}
+
+TEST(OptionalLvalueTest, LvalueMakeOptionalTest)
+{
+  int lvalue = 42;
+  auto opt = voc::makeOptional<int>(lvalue);
+  EXPECT_TRUE(opt.hasValue());
+  EXPECT_EQ(opt.getValue(), 42);
+}
+
+/*
+Optinal Rvalue test suite
+*/
+TEST(OptionalRvalueTest, RvalueTest)
+{
+  voc::Optional<int> opt(42); // 42 is an rvalue
+  EXPECT_TRUE(opt.hasValue());
+  EXPECT_EQ(opt.getValue(), 42);
+}
+
+TEST(OptionalRvalueTest, RvalueAssignmentTest)
+{
+  voc::Optional<int> opt;
+  opt = 42; // assign rvalue to Optional
+  EXPECT_TRUE(opt.hasValue());
+  EXPECT_EQ(opt.getValue(), 42);
+}
+
+TEST(OptionalRvalueTest, RvalueMakeOptionalTest)
+{
+  auto opt = voc::makeOptional<int>(42); // 42 is an rvalue
+  EXPECT_TRUE(opt.hasValue());
+  EXPECT_EQ(opt.getValue(), 42);
+}
+
+/*
+Optinal mutant test suite
+*/
+TEST(OptionalMutantTest, MutantTest_Constructor) {
+  voc::Optional<int> opt(42);
+  EXPECT_NE(opt.getValue(), 43); // mutant: change 42 to 43 in constructor
+}
+
+TEST(OptionalMutantTest, MutantTest_CopyConstructor) {
+  voc::Optional<int> opt1(42);
+  voc::Optional<int> opt2(opt1);
+  EXPECT_NE(opt2.getValue(), 43); // mutant: change 42 to 43 in copy constructor
+}
+
+TEST(OptionalMutantTest, MutantTest_MoveConstructor) {
+  voc::Optional<int> opt1(42);
+  voc::Optional<int> opt2(std::move(opt1));
+  EXPECT_NE(opt2.getValue(), 43); // mutant: change 42 to 43 in move constructor
+}
+
+TEST(OptionalMutantTest, MutantTest_CopyAssignment) {
+  voc::Optional<int> opt1(42);
+  voc::Optional<int> opt2;
+  opt2 = opt1;
+  EXPECT_NE(opt2.getValue(), 43); // mutant: change 42 to 43 in copy assignment
+}
+
+TEST(OptionalMutantTest, MutantTest_MoveAssignment) {
+  voc::Optional<int> opt1(42);
+  voc::Optional<int> opt2;
+  opt2 = std::move(opt1);
+  EXPECT_NE(opt2.getValue(), 43); // mutant: change 42 to 43 in move assignment
+}
+
+TEST(OptionalMutantTest, MutantTest_GetValue) {
+  voc::Optional<int> opt(42);
+  EXPECT_NE(opt.getValue(), 43); // mutant: change 42 to 43 in getValue
+}
+
+TEST(OptionalMutantTest, MutantTest_GetValueOr) {
+  voc::Optional<int> opt;
+  EXPECT_NE(opt.getValueOr(42), 43); // mutant: change 42 to 43 in getValueOr
+}
+
+TEST(OptionalMutantTest, MutantTest_Clear) {
+  voc::Optional<int> opt(42);
+  opt.clear();
+  EXPECT_FALSE(opt.hasValue()); // mutant: change clear to not clear the value
+}
+
+TEST(OptionalMutantTest, MutantTest_MakeOptional) {
+  auto opt = voc::makeOptional<int>(42);
+  EXPECT_NE(opt.getValue(), 43); // mutant: change 42 to 43 in makeOptional
 }
 
 #endif // VOC_OPTIONAL_TEST
